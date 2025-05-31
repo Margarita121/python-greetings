@@ -1,8 +1,8 @@
 pipeline {
     agent any
-    // triggers{
-    //     pollSCM('*/1 * * * *')
-    // }
+    triggers{
+        pollSCM('*/1 * * * *')
+    }
     stages {
         stage('build-docker-image') {
             steps {
@@ -61,8 +61,5 @@ def deploy(String environment){
 def test(String environment){
     echo "API test execution against Python microservice on ${environment} environment.."
     sh "docker pull margarita121/api-tests-final"
-    def directory = pwd()
-    sh "echo '${directory}'"
     sh "docker run --network=host --rm margarita121/api-tests-final:latest run greetings greetings_${environment}"
-    sh "ls"
 }
