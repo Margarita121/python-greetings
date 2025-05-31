@@ -31,7 +31,7 @@ pipeline {
         }
         stage('deploy-to-prod') {
             steps {
-                deploy("prod")
+                deploy("prd")
             }
         }
         stage('tests-on-prod') {
