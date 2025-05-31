@@ -44,15 +44,15 @@ pipeline {
 
 def buildApp(){
     echo "Building of Python microservice is starting.."
-    sh "docker build -t margarita121/python-greetings-app ."
+    sh "docker build -t margarita121/python-greetings-app:latest ."
 
     echo "Pushing image to docker registry.."
-    sh "docker push margarita121/python-greetings-app"
+    sh "docker push margarita121/python-greetings-app:latest"
 }
 
 def deploy(String environment){
     echo "Deployment of Python microservice on ${environment} environment.."
-    sh "docker pull margarita121/python-greetings-app"
+    sh "docker pull margarita121/python-greetings-app:latest"
     sh "docker compose stop greetings-app-${environment}"
     sh "docker compose rm greetings-app-${environment}"
     sh "docker compose up -d greetings-app-${environment}"
@@ -60,6 +60,6 @@ def deploy(String environment){
 
 def test(String environment){
     echo "API test execution against Python microservice on ${environment} environment.."
-    sh "docker pull margarita121/api-tests-final"
+    sh "docker pull margarita121/api-tests-final:latest"
     sh "docker run --network=host --rm margarita121/api-tests-final:latest run greetings greetings_${environment}"
 }
