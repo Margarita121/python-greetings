@@ -31,12 +31,12 @@ pipeline {
         }
         stage('deploy-to-prod') {
             steps {
-                deploy("prd")
+                deploy("prod")
             }
         }
         stage('tests-on-prod') {
             steps {
-                test("prd")
+                test("prod")
             }
         }
     }
@@ -53,8 +53,6 @@ def buildApp(){
 def deploy(String environment){
     echo "Deployment of Python microservice on ${environment} environment.."
     sh "docker pull margarita121/python-greetings-app"
-    // // String lowercaseEnv = environment.toLowerCase()
-    //${environment.toLowerCase()}
     sh "docker compose stop greetings-app-${environment}"
     sh "docker compose rm greetings-app-${environment}"
     sh "docker compose up -d greetings-app-${environment}"
